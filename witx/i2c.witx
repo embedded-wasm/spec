@@ -1,0 +1,58 @@
+(use "common.witx")
+
+(module $i2c
+  (@interface func (export "init")
+    ;; I2C device to init 
+    (param $port u32)
+    ;; Baud rate
+    (param $baud u32)
+
+    (param $sda s32)
+    (param $scl s32)
+
+    ;; Returns a device handle or error
+    (result $res (expected $dev (error $errno)))
+  )
+
+  (@interface func (export "deinit")
+    ;; I2C device handle to deinit 
+    (param $handle s32)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "write")
+    ;; I2C device handle for write
+    (param $handle s32)
+    ;; Peripheral address
+    (param $addr u16)
+    ;; Data to write
+    (param $data $rbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "read")
+    ;; I2C device handle for transfer 
+    (param $handle s32)
+    ;; Peripheral address
+    (param $addr u16)
+    ;; Buffer to read into
+    (param $buff $wbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "write_read")
+    ;; I2C device handle for exec
+    (param $handle s32)
+    ;; Peripheral address
+    (param $addr u16)
+    ;; Data to write
+    (param $data $rbytes)
+    ;; Buffer to read into
+    (param $buff $wbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+)

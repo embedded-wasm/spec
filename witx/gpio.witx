@@ -1,0 +1,52 @@
+(use "common.witx")
+
+(typename $mode
+   (enum (@witx tag u32)
+    $input
+    $output
+   )
+)
+
+(typename $value
+   (enum (@witx tag u32)
+    $low
+    $high
+   )
+)
+
+;;; Initialise SPI
+(module $gpio
+  (@interface func (export "init")
+    ;; GPIO Port
+    (param $port u32)
+    ;; GPIO Pin
+    (param $pin u32)
+    ;; GPIO Mode
+    (param $mode $mode)
+    ;; Returns a device handle or error
+    (result $res (expected $dev (error $errno)))
+  )
+
+  (@interface func (export "deinit")
+    ;; GPIO pin handle
+    (param $dev s32)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "set")
+    ;; GPIO pin handle
+    (param $dev s32)
+    ;; Value to write
+    (param $value $value)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "get")
+    ;; GPIO pin handle
+    (param $dev s32)
+    ;; Result
+    (result $res (expected $value (error $errno)))
+  )
+)

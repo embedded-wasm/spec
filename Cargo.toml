@@ -1,0 +1,36 @@
+[package]
+name = "wasm-embedded-spec"
+description = "Embedded WASM WITX specification"
+repository = "https://github.com/embedded-wasm/spec"
+authors = [
+  "Ryan Kurte <ryan@kurte.nz>"
+]
+license = "MPL-2.0"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+std = []
+bind_c = [ "bindgen" ]
+bind_rs = [ "wiggle", "wasmtime" ]
+
+default = [ "std", "bind_c", "bind_rs" ]
+
+[dependencies]
+cty = "0.2.2"
+embedded-hal = "1.0.0-alpha.5"
+log = { version = "*", default_features = false }
+
+[dependencies.wiggle]
+version = "0.31.0"
+optional = true
+
+[dependencies.wasmtime]
+version = "0.31.0"
+optional = true
+
+[build-dependencies.bindgen]
+version = "0.53.1"
+default_features = false
+features = [ "runtime", "which-rustfmt" ]
+optional = true

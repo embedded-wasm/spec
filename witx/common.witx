@@ -1,0 +1,35 @@
+
+(typename $size u32)
+
+(typename $dev s32)
+
+;;; Common error number type
+(typename $errno
+    (enum (@witx tag u32)
+    $ok
+    $invalid_arg
+    $failed
+    $no_device
+    $unexpected
+  )
+)
+
+;;; Readable (immutable) bytes type
+(typename $rbytes
+  (record
+    ;;; The address of the buffer to be written.
+    (field $ptr (@witx const_pointer u8))
+    ;;; The length of the buffer to be written.
+    (field $len $size)
+  )
+)
+
+;;; Writable (mutable) bytes
+(typename $wbytes
+  (record
+    ;;; The address of the buffer to be written.
+    (field $ptr (@witx const_pointer u8))
+    ;;; The length of the buffer to be written.
+    (field $len $size)
+  )
+)

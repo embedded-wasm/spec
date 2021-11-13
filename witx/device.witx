@@ -1,0 +1,37 @@
+(use "common.witx")
+
+(typename $handle_array 
+  (record
+    ;;; The address of the buffer to be written.
+    (field $ptr (@witx const_pointer s32))
+    ;;; The length of the buffer to be written.
+    (field $len $size)
+))
+
+
+(module $device
+  (@interface func (export "spi")
+    ;; SPI array to fill
+    (param $spi $handle_array)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+  (@interface func (export "i2c")
+    ;; I2C array to fill
+    (param $i2c $handle_array)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+  (@interface func (export "gpio_in")
+    ;; GPIO input array to fill
+    (param $gpio_in $handle_array)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+  (@interface func (export "gpio_out")
+    ;; GPIO output array to fill
+    (param $gpio_out $handle_array)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+)

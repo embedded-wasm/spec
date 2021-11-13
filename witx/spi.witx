@@ -1,0 +1,82 @@
+(use "common.witx")
+
+;;; Operation kinds for transactional SPI
+(typename $op_kind
+   (enum (@witx tag u32)
+    $transfer
+    $read
+    $write
+   )
+)
+
+;;; Operation for transactional SPI
+(typename $op
+   (record
+    (field $kind $op_kind)
+    (field $ptr (@witx pointer u8))
+    (field $len u32)
+   )
+)
+
+(typename $op_array (list $op))
+
+(typename $cfg
+  (record
+    (field $freq u32)
+    (field $mosi s32)
+    (field $miso s32)
+    (field $sck  s32)
+    (field $cs   s32)
+  )
+)
+
+(module $spi
+  (@interface func (export "init")
+    ;; SPI device to init 
+    (param $port u32)
+    ;; Baud rate
+    (param $baud u32)
+
+    (param $mosi s32)
+    (param $miso s32)
+    (param $sck  s32)
+    (param $cs   s32)
+    ;; Returns a device handle or error
+    (result $res (expected $dev (error $errno)))
+  )
+
+  (@interface func (export "deinit")
+    ;; SPI device to deinit 
+    (param $handle s32)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "write")
+    ;; SPI device for write
+    (param $handle s32)
+    ;; Data to write
+    (param $data $wbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "transfer")
+    ;; SPI device for transfer 
+    (param $handle s32)
+    ;; Data to transfer (write and read)
+    (param $data $rbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "exec")
+    ;; SPI device for exec
+    (param $handle s32)
+    ;; List of operations to execute
+    (param $data $op_array)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+)
+
