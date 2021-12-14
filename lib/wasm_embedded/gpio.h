@@ -1,5 +1,7 @@
-#ifndef WASME_GPIO_H
-#define WASME_GPIO_H
+/// Embedded WASM abstract C GPIO platform interface
+
+#ifndef EWASM_GPIO_H
+#define EWASM_GPIO_H
 
 #include <stdint.h>
 
@@ -21,7 +23,7 @@ typedef int32_t gpio_set_f(void *ctx, int32_t handle, uint32_t value);
 typedef int32_t gpio_get_f(void *ctx, int32_t handle, uint32_t* value);
 
 
-/// GPIO driver object
+/// C platform GPIO driver object
 typedef struct {
     const gpio_init_f *init;
     const gpio_deinit_f *deinit;

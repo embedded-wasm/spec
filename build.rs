@@ -7,13 +7,18 @@ fn main() {
     println!("cargo:rerun-if-changed=./witx/*.witx");
     println!("cargo:rerun-if-changed=lib/*");
 
+    // Setup WASI root
+    // https://github.com/bytecodealliance/wasmtime/issues/3519
+    let dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
+    println!("cargo:rustc-env=WASI_ROOT={}/witx", dir);
+
     // Setup binding generation
     let mut builder = bindgen::Builder::default()
         .use_core()
         .ctypes_prefix("::cty")
-        .header("lib/ewasm/i2c.h")
-        .header("lib/ewasm/spi.h")
-        .header("lib/ewasm/gpio.h")
+        .header("lib/wasm_embedded/i2c.h")
+        .header("lib/wasm_embedded/spi.h")
+        .header("lib/wasm_embedded/gpio.h")
         .whitelist_type("wasme.*")
         .whitelist_type("i2c.*")
         .whitelist_type("spi.*")

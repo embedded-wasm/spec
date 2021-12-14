@@ -1,5 +1,7 @@
-#ifndef WASME_I2C_H
-#define WASME_I2C_H
+/// Embedded WASM abstract C I2C platform interface
+
+#ifndef EWASM_I2C_H
+#define EWASM_I2C_H
 
 #include <stdint.h>
 
@@ -25,7 +27,7 @@ typedef int32_t i2c_write_read_f(void *ctx, int32_t handle, uint16_t address,
                                 uint8_t *data_out, uint32_t length_out,
                                 uint8_t *data_in, uint32_t length_in);
 
-/// WASME I2C driver object
+/// C platform I2C driver object
 typedef struct {
     i2c_init_f *init;
     i2c_deinit_f *deinit;
