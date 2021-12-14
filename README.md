@@ -9,10 +9,11 @@ For a more detailed overview you may like to check out the [book](https://ryan.k
 ## Status
 
 [![ci](https://github.com/embedded-wasm/spec/actions/workflows/ci.yml/badge.svg)](https://github.com/embedded-wasm/spec/actions/workflows/ci.yml)
-[![Crates.io](https://img.shields.io/crates/v/embedded-wasm-spec.svg)](https://crates.io/crates/embedded-wasm-spec)
-[![Docs.rs](https://docs.rs/embedded-wasm-spec/badge.svg)](https://docs.rs/embedded-wasm-spec)
+[![Crates.io](https://img.shields.io/crates/v/wasm-embedded-spec.svg)](https://crates.io/crates/wasm-embedded-spec)
+[![Docs.rs](https://docs.rs/wasm-embedded-spec/badge.svg)](https://docs.rs/wasm-embedded-spec)
 
-Extremely alpha, plenty of exploration required yet and the `wasi` call convention and `witx` format are moving targets.
+
+Extremely alpha. Currently working to refactor / split out components from a frightening monolith, plenty of exploration required yet and the `wasi` call convention and `witx` format are moving targets.
 
 
 ## Layout
