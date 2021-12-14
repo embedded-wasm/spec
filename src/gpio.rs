@@ -1,19 +1,19 @@
 //! Platform GPIO API abstraction (and wrappers).
-//! 
+//!
 //! Provides a platform GPIO trait with wiggle and c wrappers
 
 use embedded_hal::digital::PinState;
 
-use super::{Error};
+use super::Error;
 
-#[cfg(feature="wiggle")]
+#[cfg(feature = "wiggle")]
 use crate::api::types;
 
-#[cfg(feature="bindgen")]
+#[cfg(feature = "bindgen")]
 use crate::api::{self, Driver};
 
 /// Platform GPIO API abstraction.
-/// 
+///
 /// This hides runtime implementation details to simplify implementing GPIO contexts.
 /// Hopefully one day generation is improved so we don't _need_ this any more
 pub trait Gpio {
@@ -30,10 +30,9 @@ pub trait Gpio {
     fn get(&mut self, handle: i32) -> Result<PinState, Error>;
 }
 
-
 /// Wrapper for wiggle-generated I2C api
 #[cfg(feature = "wiggle")]
-impl <T: Gpio> crate::api::gpio::Gpio for T {
+impl<T: Gpio> crate::api::gpio::Gpio for T {
     /// Initialise the provided GPIO pin in input or output mode
     fn init(&mut self, port: u32, pin: u32, mode: types::Mode) -> Result<i32, Error> {
         log::debug!("GPIO init port: {} pin: {} mode: {:?}", port, pin, mode);
@@ -71,10 +70,9 @@ impl <T: Gpio> crate::api::gpio::Gpio for T {
     }
 }
 
-
 /// Driver adaptor to C/wasm3 I2C API
 #[cfg(feature = "bindgen")]
-impl <T: Gpio> Driver<api::gpio_drv_t> for T {
+impl<T: Gpio> Driver<api::gpio_drv_t> for T {
     fn driver(&self) -> api::gpio_drv_t {
         api::gpio_drv_t {
             init: Some(wasm3::gpio_init::<T>),
@@ -87,12 +85,17 @@ impl <T: Gpio> Driver<api::gpio_drv_t> for T {
 
 #[cfg(feature = "bindgen")]
 pub(super) mod wasm3 {
-    use core::ffi::{c_void};
+    use core::ffi::c_void;
 
-    use embedded_hal::digital::PinState;
     use super::Gpio;
+    use embedded_hal::digital::PinState;
 
-    pub extern "C" fn gpio_init<T: Gpio>(ctx: *mut c_void, port: u32, pin: u32, output: u32) -> i32 {
+    pub extern "C" fn gpio_init<T: Gpio>(
+        ctx: *mut c_void,
+        port: u32,
+        pin: u32,
+        output: u32,
+    ) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
         match Gpio::init(ctx, port, pin, output != 0) {
             Ok(i) => i,
@@ -123,7 +126,7 @@ pub(super) mod wasm3 {
             Ok(PinState::High) => {
                 unsafe { *value = 1 };
                 0
-            },
+            }
             Ok(PinState::Low) => {
                 unsafe { *value = 0 };
                 0

@@ -1,4 +1,3 @@
-
 use std::env;
 use std::path::PathBuf;
 
@@ -33,14 +32,14 @@ fn main() {
                 .clang_arg("-target")
                 .clang_arg("arm-linux-gnueabihf")
                 .clang_arg("-I/usr/arm-linux-gnueabihf/include/")
-        },
+        }
         Ok("aarch64-unknown-linux-gnu") => {
             println!("cargo:rustc-env=CC=aarch64-linux-gnu-gcc");
             builder
                 .clang_arg("-target")
                 .clang_arg("aarch64-linux-gnu")
                 .clang_arg("-I/usr/aarch64-linux-gnu/include/")
-        },
+        }
         Ok("thumbv7em-none-eabihf") => {
             println!("cargo:rustc-env=CC=arm-none-eabi-gcc");
             builder
@@ -49,12 +48,11 @@ fn main() {
                 .clang_arg("arm-none-eabihf")
                 // TODO: this seems... fragile
                 .clang_arg("-I/usr/lib/gcc/arm-none-eabi/8.3.1/include/")
-        },
+        }
         _ => builder,
     };
 
-    let bindings = builder.generate()
-        .expect("Unable to generate bindings");
+    let bindings = builder.generate().expect("Unable to generate bindings");
 
     // Write the bindings to the $OUT_DIR/bindings.rs file.
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());

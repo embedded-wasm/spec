@@ -1,18 +1,23 @@
 //! API module provides wiggle and bindgen based platform API definitions.
 
-#![allow(non_snake_case, non_camel_case_types, non_upper_case_globals, clippy::all)]
+#![allow(
+    non_snake_case,
+    non_camel_case_types,
+    non_upper_case_globals,
+    clippy::all
+)]
 
 use crate::Error;
 
 #[cfg(feature = "bindgen")]
-pub use cty::{c_char};
+pub use cty::c_char;
 
 // Load WITX interface specifications if enabled
 // https://docs.rs/wiggle/0.28.0/wiggle/macro.from_witx.html
 #[cfg(feature = "wiggle")]
 wiggle::from_witx!({
     witx: [
-        "./witx/common.witx", 
+        "./witx/common.witx",
         "./witx/spi.witx",
         "./witx/i2c.witx",
         "./witx/gpio.witx",
@@ -22,7 +27,7 @@ wiggle::from_witx!({
 });
 
 #[cfg(feature = "wiggle")]
-pub use types::{UserErrorConversion, Errno};
+pub use types::{Errno, UserErrorConversion};
 
 #[cfg(feature = "wiggle")]
 impl wiggle::GuestErrorType for types::Errno {
@@ -47,5 +52,8 @@ use wasmtime::Linker;
 
 #[cfg(feature = "wasmtime")]
 pub trait Link<T, U> {
-    fn link(l: &mut Linker<T>, get_cx: impl Fn(&mut T) -> &mut U + Send + Sync + Copy + 'static) -> Result<(), ()>;
+    fn link(
+        l: &mut Linker<T>,
+        get_cx: impl Fn(&mut T) -> &mut U + Send + Sync + Copy + 'static,
+    ) -> Result<(), ()>;
 }

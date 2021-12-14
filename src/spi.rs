@@ -1,28 +1,36 @@
 //! Platform I2C API abstraction (and wrappers).
-//! 
+//!
 //! Provides a platform I2C trait with wiggle and c wrappers
 
 use core::ops::{Deref, DerefMut};
 
 use embedded_hal::spi::blocking::Operation;
 
-use super::{Error};
+use super::Error;
 
-#[cfg(feature="wiggle")]
+#[cfg(feature = "wiggle")]
 use wiggle::GuestPtr;
 
-#[cfg(feature="wiggle")]
+#[cfg(feature = "wiggle")]
 use super::api::types;
 
-#[cfg(feature="bindgen")]
+#[cfg(feature = "bindgen")]
 use super::api::{self, Driver};
 
 /// SPI context abstraction.
-/// 
+///
 /// This hides runtime implementation details to simplify implementing I2C contexts.
 /// Hopefully one day generation is improved so we don't _need_ this any more
 pub trait Spi {
-    fn init(&mut self, dev: u32, baud: u32, mosi: i32, miso: i32, sck: i32, cs: i32) -> Result<i32, Error>;
+    fn init(
+        &mut self,
+        dev: u32,
+        baud: u32,
+        mosi: i32,
+        miso: i32,
+        sck: i32,
+        cs: i32,
+    ) -> Result<i32, Error>;
 
     fn deinit(&mut self, handle: i32) -> Result<(), Error>;
 
@@ -35,10 +43,25 @@ pub trait Spi {
 
 /// Wrapper for wiggle-generated SPI APIs
 #[cfg(feature = "wiggle")]
-impl <T: Spi> crate::api::spi::Spi for T {
-    fn init(&mut self, dev: u32, baud: u32, mosi: i32, miso: i32, sck: i32, cs: i32) -> Result<i32, Error> {
-        log::debug!("Opening SPI device: {} (baud: {} mosi: {} miso: {} sck: {} cs: {})", 
-                dev, baud, mosi, miso, sck, cs);
+impl<T: Spi> crate::api::spi::Spi for T {
+    fn init(
+        &mut self,
+        dev: u32,
+        baud: u32,
+        mosi: i32,
+        miso: i32,
+        sck: i32,
+        cs: i32,
+    ) -> Result<i32, Error> {
+        log::debug!(
+            "Opening SPI device: {} (baud: {} mosi: {} miso: {} sck: {} cs: {})",
+            dev,
+            baud,
+            mosi,
+            miso,
+            sck,
+            cs
+        );
         Spi::init(self, dev, baud, mosi, miso, sck, cs)
     }
 
@@ -72,7 +95,7 @@ impl <T: Spi> crate::api::spi::Spi for T {
 
 /// Driver adaptor to C/wasm3 SPI API
 #[cfg(feature = "bindgen")]
-impl <T: Spi> Driver<api::spi_drv_t> for T {
+impl<T: Spi> Driver<api::spi_drv_t> for T {
     fn driver(&self) -> api::spi_drv_t {
         api::spi_drv_t {
             init: Some(wasm3::spi_init::<T>),
@@ -90,12 +113,20 @@ pub(super) mod wasm3 {
 
     use log::warn;
 
+    use core::ffi::c_void;
     use core::slice;
-    use core::ffi::{c_void};
 
     use super::Spi;
 
-    pub extern "C" fn spi_init<T: Spi>(ctx: *mut c_void, dev: u32, baud: u32, mosi: i32, miso: i32, sck: i32, cs: i32) -> i32 {
+    pub extern "C" fn spi_init<T: Spi>(
+        ctx: *mut c_void,
+        dev: u32,
+        baud: u32,
+        mosi: i32,
+        miso: i32,
+        sck: i32,
+        cs: i32,
+    ) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
         match Spi::init(ctx, dev, baud, mosi, miso, sck, cs) {
             Ok(i) => i,
@@ -119,9 +150,14 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn spi_write<T: Spi>(ctx: *mut c_void, handle: i32, data_out: *mut u8, length_out: u32) -> i32 {
+    pub extern "C" fn spi_write<T: Spi>(
+        ctx: *mut c_void,
+        handle: i32,
+        data_out: *mut u8,
+        length_out: u32,
+    ) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
-        let data = unsafe{ slice::from_raw_parts_mut(data_out, length_out as usize) };
+        let data = unsafe { slice::from_raw_parts_mut(data_out, length_out as usize) };
 
         match Spi::write(ctx, handle, data) {
             Ok(_) => 0,
@@ -133,9 +169,14 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn spi_transfer<T: Spi>(ctx: *mut c_void, handle: i32, data: *mut u8, length: u32) -> i32 {
+    pub extern "C" fn spi_transfer<T: Spi>(
+        ctx: *mut c_void,
+        handle: i32,
+        data: *mut u8,
+        length: u32,
+    ) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
-        let data = unsafe{ slice::from_raw_parts_mut(data, length as usize) };
+        let data = unsafe { slice::from_raw_parts_mut(data, length as usize) };
 
         match Spi::transfer(ctx, handle, data) {
             Ok(_) => 0,
