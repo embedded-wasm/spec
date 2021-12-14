@@ -19,7 +19,7 @@ default = [ "std", "bind_c", "bind_rs" ]
 [dependencies]
 cty = "0.2.2"
 embedded-hal = "1.0.0-alpha.5"
-log = { version = "*", default_features = false }
+log = { version = "0.4.14", default_features = false }
 
 [dependencies.wiggle]
 version = "0.31.0"
