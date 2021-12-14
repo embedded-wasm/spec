@@ -15,8 +15,6 @@ jobs:
     name: Test specification
     runs-on: ${{ matrix.os }}
     continue-on-error: true
-    
-    strategy:
 
     steps:
     - uses: actions/checkout@v2
