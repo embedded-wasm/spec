@@ -1,0 +1,7 @@
+# Mock expectations for spi test, see hal/tests/spi.rs
+ops = [
+  { kind = "spi_init", port = 0, baud = 4000000, mosi = -1, miso = -1, sck = -1, cs = -1, res = 2 },
+  { kind = "spi_write", handle = 2, data_out = [0xaa, 0xbb, 0xcc], res = 0 },
+  { kind = "spi_transfer", handle = 2, data_out = [0xaa, 0xbb, 0xcc, 0xdd], data_in = [0x11, 0x22, 0x33, 0x44], res = 0 },
+  { kind = "spi_deinit", handle = 2, res = 0 },
+]

@@ -21,4 +21,5 @@ Extremely alpha. Currently working to refactor / split out components from a fri
 - [./witx](./witx) contains the `.witx` API specifications
 - [./src](./src) provides a rust library generated using these specs (including platform abstractions)
 - [./lib](./lib) contains C headers for platform implementations
+- [./tests](./tests) contains test definitions for implementation by platforms and HALs
   

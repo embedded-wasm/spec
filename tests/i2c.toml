@@ -1,0 +1,7 @@
+# Mock expectations for i2c test, see hal/tests/i2c.rs
+ops = [
+  { kind = "i2c_init", port = 0, baud = 4000000, sda = -1, scl = -1, res = 1 },
+  { kind = "i2c_write", handle = 1, addr = 0x0a, data_out = [0xaa, 0xbb, 0xcc], res = 0 },
+  { kind = "i2c_read", handle = 1, addr = 0x0a, data_in = [0x11, 0x22, 0x33, 0x44], res = 0 },
+  { kind = "i2c_write_read", handle = 1, addr = 0x0a, data_out = [0xaa, 0xbb, 0xcc], data_in = [0x22, 0x33, 0x44, 0x55], res = 0 },
+]

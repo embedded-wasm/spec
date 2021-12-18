@@ -1,0 +1,7 @@
+# Mock expectations for gpio test, see hal_rs/tests/gpio.rs
+ops = [
+  { kind = "gpio_init", port = 2, pin = 3, output = true, res = 1 },
+  { kind = "gpio_set", handle = 1, state = "high", res = 0 },
+  { kind = "gpio_init", port = 2, pin = 4, output = false, res = 2 },
+  { kind = "gpio_get", handle = 2, state = "low", res = 0 },
+]
