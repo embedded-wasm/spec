@@ -9,6 +9,9 @@ license = "MPL-2.0"
 version = "0.1.0"
 edition = "2021"
 
+# Links argument required to pass variables to dependencies
+links = "embedded-wasm-spec"
+
 [features]
 std = []
 bind_c = [ "bindgen" ]

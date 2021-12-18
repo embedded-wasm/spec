@@ -11,16 +11,16 @@ fn main() {
     let dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
     println!("cargo:rustc-env=WASI_ROOT={}/witx", dir);
 
-    // Setup search dir for other projects
-    println!("cargo:rustc-env=WASME_SPEC_DIR={}", dir);
+    // Export spec dir for other projects
+    println!("cargo:ROOT={}", dir);
 
     // Setup binding generation
     let mut builder = bindgen::Builder::default()
         .use_core()
         .ctypes_prefix("::cty")
-        .header("lib/wasm_embedded/i2c.h")
-        .header("lib/wasm_embedded/spi.h")
-        .header("lib/wasm_embedded/gpio.h")
+        .header("inc/wasm_embedded/i2c.h")
+        .header("inc/wasm_embedded/spi.h")
+        .header("inc/wasm_embedded/gpio.h")
         .whitelist_type("wasme.*")
         .whitelist_type("i2c.*")
         .whitelist_type("spi.*")
