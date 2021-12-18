@@ -128,7 +128,7 @@ pub(super) mod wasm3 {
     use super::I2c;
 
     pub extern "C" fn i2c_init<T: I2c>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         dev: u32,
         baud: u32,
         sda: i32,
@@ -145,7 +145,7 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn i2c_deinit<T: I2c>(ctx: *mut c_void, handle: i32) -> i32 {
+    pub extern "C" fn i2c_deinit<T: I2c>(ctx: *const c_void, handle: i32) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
         match I2c::deinit(ctx, handle) {
             Ok(_) => 0,
@@ -158,7 +158,7 @@ pub(super) mod wasm3 {
     }
 
     pub extern "C" fn i2c_read<T: I2c>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         handle: i32,
         address: u16,
         data_in: *mut u8,
@@ -178,7 +178,7 @@ pub(super) mod wasm3 {
     }
 
     pub extern "C" fn i2c_write<T: I2c>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         handle: i32,
         address: u16,
         data_out: *mut u8,
@@ -198,7 +198,7 @@ pub(super) mod wasm3 {
     }
 
     pub extern "C" fn i2c_write_read<T: I2c>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         handle: i32,
         address: u16,
         data_out: *mut u8,

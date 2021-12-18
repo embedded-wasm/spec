@@ -91,7 +91,7 @@ pub(super) mod wasm3 {
     use embedded_hal::digital::PinState;
 
     pub extern "C" fn gpio_init<T: Gpio>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         port: u32,
         pin: u32,
         output: u32,
@@ -107,7 +107,7 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn gpio_deinit<T: Gpio>(ctx: *mut c_void, handle: i32) -> i32 {
+    pub extern "C" fn gpio_deinit<T: Gpio>(ctx: *const c_void, handle: i32) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
         match Gpio::deinit(ctx, handle) {
             Ok(_) => 0,
@@ -119,7 +119,7 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn gpio_get<T: Gpio>(ctx: *mut c_void, handle: i32, value: *mut u32) -> i32 {
+    pub extern "C" fn gpio_get<T: Gpio>(ctx: *const c_void, handle: i32, value: *mut u32) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
 
         match Gpio::get(ctx, handle) {
@@ -139,7 +139,7 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn gpio_set<T: Gpio>(ctx: *mut c_void, handle: i32, value: u32) -> i32 {
+    pub extern "C" fn gpio_set<T: Gpio>(ctx: *const c_void, handle: i32, value: u32) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
 
         let state = if value == 0 {

@@ -119,7 +119,7 @@ pub(super) mod wasm3 {
     use super::Spi;
 
     pub extern "C" fn spi_init<T: Spi>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         dev: u32,
         baud: u32,
         mosi: i32,
@@ -138,7 +138,7 @@ pub(super) mod wasm3 {
         }
     }
 
-    pub extern "C" fn spi_deinit<T: Spi>(ctx: *mut c_void, handle: i32) -> i32 {
+    pub extern "C" fn spi_deinit<T: Spi>(ctx: *const c_void, handle: i32) -> i32 {
         let ctx: &mut T = unsafe { &mut *(ctx as *mut T) };
         match Spi::deinit(ctx, handle) {
             Ok(_) => 0,
@@ -151,7 +151,7 @@ pub(super) mod wasm3 {
     }
 
     pub extern "C" fn spi_write<T: Spi>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         handle: i32,
         data_out: *mut u8,
         length_out: u32,
@@ -170,7 +170,7 @@ pub(super) mod wasm3 {
     }
 
     pub extern "C" fn spi_transfer<T: Spi>(
-        ctx: *mut c_void,
+        ctx: *const c_void,
         handle: i32,
         data: *mut u8,
         length: u32,

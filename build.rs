@@ -11,6 +11,9 @@ fn main() {
     let dir = std::env::var("CARGO_MANIFEST_DIR").unwrap();
     println!("cargo:rustc-env=WASI_ROOT={}/witx", dir);
 
+    // Setup search dir for other projects
+    println!("cargo:rustc-env=WASME_SPEC_DIR={}", dir);
+
     // Setup binding generation
     let mut builder = bindgen::Builder::default()
         .use_core()
