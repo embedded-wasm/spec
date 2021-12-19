@@ -45,6 +45,11 @@ include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 pub trait Driver<Inner>: Sized {
     /// Driver method creates a typed adaptor for wasm3 use
     fn driver(&self) -> Inner;
+
+    /// Fetch C context pointer for driver instance
+    fn ctx(&mut self) -> *mut cty::c_void {
+        self as *mut _ as *mut cty::c_void
+    }
 }
 
 #[cfg(feature = "wasmtime")]
