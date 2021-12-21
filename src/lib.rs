@@ -13,6 +13,8 @@ pub mod gpio;
 pub mod i2c;
 pub mod spi;
 
+pub mod display;
+
 /// Embedded WASM Error type
 ///
 /// Note these values _must_ correspond to WASM/WITX spec

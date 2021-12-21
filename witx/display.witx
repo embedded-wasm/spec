@@ -1,0 +1,56 @@
+(use "common.witx")
+
+ ;;; Pixel kind
+ (typename $pixel
+    (enum (@witx tag u32)
+     $bw
+     $gs8
+     $rgb24
+    )
+ )
+
+ ;;; Display info
+ (typename $display_info
+    (record
+     (field $w u32)
+     (field $h u32)
+     (field $p $pixel)
+    )
+ )
+
+ ;;; Display module
+ (module $display
+   (@interface func (export "init")
+     ;; Display index
+     (param $idx u32)
+     ;; Returns a device handle or error
+     (result $res (expected $dev (error $errno)))
+   )
+
+   (@interface func (export "deinit")
+     ;; Device handle
+     (param $dev s32)
+     ;; Result
+     (result $res (expected (error $errno)))
+   )
+
+   (@interface func (export "info")
+     ;; Device handle
+     (param $dev s32)
+     ;; Result
+     (result $res (expected $display_info (error $errno)))
+   )
+
+   (@interface func (export "set_pixel")
+     ;; Device handle
+     (param $dev s32)
+     ;; X location of pixel
+     (param $x u32)
+     ;; Y location of pixel
+     (param $y u32)
+     ;; Pixel value
+     (param $v u32)
+     ;; Result
+     (result $res (expected (error $errno)))
+   )
+ )

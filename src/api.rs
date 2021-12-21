@@ -22,6 +22,7 @@ wiggle::from_witx!({
         "./witx/i2c.witx",
         "./witx/gpio.witx",
         "./witx/device.witx",
+        "./witx/display.witx",
     ],
     errors: { errno => Error },
 });
