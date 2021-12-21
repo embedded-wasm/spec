@@ -29,7 +29,8 @@ jobs:
     - name: Configure toolchain
       uses: actions-rs/toolchain@v1
       with:
-        toolchain: nightly
+        # temporarily pinned to 2021-11-01 for broken deps
+        toolchain: nightly-2021-11-01
         target:  ${{ matrix.target }}
         override: true
         components: rustfmt, clippy
