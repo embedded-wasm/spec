@@ -21,10 +21,12 @@ fn main() {
         .header("inc/wasm_embedded/i2c.h")
         .header("inc/wasm_embedded/spi.h")
         .header("inc/wasm_embedded/gpio.h")
+        .header("inc/wasm_embedded/display.h")
         .whitelist_type("wasme.*")
         .whitelist_type("i2c.*")
         .whitelist_type("spi.*")
-        .whitelist_type("gpio.*");
+        .whitelist_type("gpio.*")
+        .whitelist_type("display.*");
 
     // Patches to help bindgen with cross compiling
     // See: https://github.com/rust-lang/rust-bindgen/issues/1229#issuecomment-366522257
