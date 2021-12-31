@@ -123,7 +123,7 @@ pub(super) mod wasm3 {
     use core::ffi::c_void;
     use core::slice;
 
-    use log::warn;
+    use log::debug;
 
     use super::I2c;
 
@@ -139,7 +139,7 @@ pub(super) mod wasm3 {
             Ok(i) => i,
             // TODO: not sure how to manage this yet
             Err(e) => {
-                warn!("{:?}", e);
+                debug!("I2c::init failed: {:?}", e);
                 return -1;
             }
         }
@@ -151,7 +151,7 @@ pub(super) mod wasm3 {
             Ok(_) => 0,
             // TODO: not sure how to manage this yet
             Err(e) => {
-                warn!("{:?}", e);
+                debug!("I2c::deinit failed: {:?}", e);
                 return -1;
             }
         }
@@ -171,7 +171,7 @@ pub(super) mod wasm3 {
             Ok(_) => 0,
             // TODO: not sure how to manage this yet
             Err(e) => {
-                warn!("{:?}", e);
+                debug!("I2c::read failed: {:?}", e);
                 return -1;
             }
         }
@@ -191,7 +191,7 @@ pub(super) mod wasm3 {
             Ok(_) => 0,
             // TODO: not sure how to manage this yet
             Err(e) => {
-                warn!("{:?}", e);
+                debug!("I2c::write failed: {:?}", e);
                 return -1;
             }
         }
@@ -214,7 +214,7 @@ pub(super) mod wasm3 {
             Ok(_) => 0,
             // TODO: not sure how to manage this yet
             Err(e) => {
-                warn!("{:?}", e);
+                debug!("I2c::write_read failed: {:?}", e);
                 return -1;
             }
         }
