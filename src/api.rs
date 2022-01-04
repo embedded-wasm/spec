@@ -7,6 +7,7 @@
     clippy::all
 )]
 
+#[cfg(feature = "wiggle")]
 use crate::Error;
 
 #[cfg(feature = "bindgen")]
@@ -39,26 +40,3 @@ impl wiggle::GuestErrorType for types::Errno {
 // Include generated bindings if enabled
 #[cfg(feature = "bindgen")]
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
-
-/// Helper trait to generate typed driver objects
-#[cfg(feature = "bindgen")]
-pub trait Driver<Inner>: Sized {
-    /// Driver method creates a typed adaptor for wasm3 use
-    fn driver(&self) -> Inner;
-
-    /// Fetch C context pointer for driver instance
-    fn ctx(&mut self) -> *mut cty::c_void {
-        self as *mut _ as *mut cty::c_void
-    }
-}
-
-#[cfg(feature = "wasmtime")]
-use wasmtime::Linker;
-
-#[cfg(feature = "wasmtime")]
-pub trait Link<T, U> {
-    fn link(
-        l: &mut Linker<T>,
-        get_cx: impl Fn(&mut T) -> &mut U + Send + Sync + Copy + 'static,
-    ) -> Result<(), ()>;
-}

@@ -1,4 +1,7 @@
+#[cfg(feature="bind_c")]
 use std::env;
+
+#[cfg(feature="bind_c")]
 use std::path::PathBuf;
 
 fn main() {
