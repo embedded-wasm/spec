@@ -22,4 +22,21 @@ pub enum Error {
     Unexpected,
     Failed,
     NoDevice,
+    Unsupported,
+}
+
+#[cfg(feature="wiggle")]
+impl From<Error> for crate::api::types::Errno {
+    fn from(e: Error) -> crate::api::types::Errno {
+        use crate::api::types::Errno;
+
+        match e {
+            Error::InvalidArg => Errno::InvalidArg,
+            Error::Unexpected => Errno::Unexpected,
+            Error::Failed => Errno::Failed,
+            Error::NoDevice => Errno::NoDevice,
+            Error::Unsupported => Errno::Unsupported,
+        }
+
+    }
 }

@@ -11,6 +11,7 @@
     $failed
     $no_device
     $unexpected
+    $unsupported
   )
 )
 
