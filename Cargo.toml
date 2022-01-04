@@ -6,7 +6,7 @@ authors = [
   "Ryan Kurte <ryan@kurte.nz>"
 ]
 license = "MPL-2.0"
-version = "0.2.4"
+version = "0.3.0"
 edition = "2021"
 
 # Links argument required to pass variables to dependencies
