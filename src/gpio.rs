@@ -10,6 +10,7 @@ use super::Error;
 ///
 /// This hides runtime implementation details to simplify implementing GPIO contexts.
 /// Hopefully one day generation is improved so we don't _need_ this any more
+#[cfg_attr(feature = "mocks", mockall::automock)]
 pub trait Gpio {
     /// Initialise a GPIO by port and pin, returning a handle
     fn init(&mut self, port: u32, pin: u32, output: bool) -> Result<i32, Error>;
