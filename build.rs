@@ -8,6 +8,7 @@ fn main() {
     // Rerun on file changes
     println!("cargo:rerun-if-changed=./witx/*.witx");
     println!("cargo:rerun-if-changed=lib/*");
+    println!("cargo:rerun-if-changed=build.rs");
 
     // Setup WASI root
     // https://github.com/bytecodealliance/wasmtime/issues/3519
@@ -27,10 +28,10 @@ fn main() {
             .header("inc/wasm_embedded/i2c.h")
             .header("inc/wasm_embedded/spi.h")
             .header("inc/wasm_embedded/gpio.h")
-            .whitelist_type("wasme.*")
-            .whitelist_type("i2c.*")
-            .whitelist_type("spi.*")
-            .whitelist_type("gpio.*");
+            .allowlist_type("wasme.*")
+            .allowlist_type("i2c.*")
+            .allowlist_type("spi.*")
+            .allowlist_type("gpio.*");
 
         // Patches to help bindgen with cross compiling
         // See: https://github.com/rust-lang/rust-bindgen/issues/1229#issuecomment-366522257
