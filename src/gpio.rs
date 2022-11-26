@@ -13,7 +13,7 @@ use super::Error;
 #[cfg_attr(feature = "mocks", mockall::automock)]
 pub trait Gpio {
     /// Initialise a GPIO by port and pin, returning a handle
-    fn init(&mut self, port: u32, pin: u32, output: bool) -> Result<i32, Error>;
+    fn init(&mut self, port: i32, pin: i32, output: bool) -> Result<i32, Error>;
 
     /// Deinitialise a GPIO by handle
     fn deinit(&mut self, handle: i32) -> Result<(), Error>;

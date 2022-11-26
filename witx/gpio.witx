@@ -18,9 +18,9 @@
 (module $gpio
   (@interface func (export "init")
     ;; GPIO Port
-    (param $port u32)
+    (param $port s32)
     ;; GPIO Pin
-    (param $pin u32)
+    (param $pin s32)
     ;; GPIO Mode
     (param $mode $mode)
     ;; Returns a device handle or error

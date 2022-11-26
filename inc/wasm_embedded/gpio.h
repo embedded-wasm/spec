@@ -11,7 +11,7 @@ extern "C"
 #endif
 
 /// Init, takes device index and config and returns handle (or error)
-typedef int32_t gpio_init_f(const void *ctx, uint32_t port, uint32_t pin, uint32_t mode);
+typedef int32_t gpio_init_f(const void *ctx, int32_t port, int32_t pin, uint32_t mode);
 
 /// Deinit, takes device handle and deinitialises
 typedef int32_t gpio_deinit_f(const void *ctx, int32_t handle);
