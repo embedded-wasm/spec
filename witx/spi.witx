@@ -1,3 +1,5 @@
+;;; SPI Device API
+
 (use "common.witx")
 
 ;;; Operation kinds for transactional SPI
@@ -52,6 +54,15 @@
     (result $res (expected (error $errno)))
   )
 
+  (@interface func (export "read")
+    ;; SPI device for write
+    (param $handle s32)
+    ;; Buffer to read in data
+    (param $read $rbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
   (@interface func (export "write")
     ;; SPI device for write
     (param $handle s32)
@@ -64,12 +75,24 @@
   (@interface func (export "transfer")
     ;; SPI device for transfer 
     (param $handle s32)
+    ;; Buffer to read in data
+    (param $read $rbytes)
+    ;; Data to write out
+    (param $write $wbytes)
+    ;; Result
+    (result $res (expected (error $errno)))
+  )
+
+  (@interface func (export "transfer_inplace")
+    ;; SPI device for transfer 
+    (param $handle s32)
     ;; Data to transfer (write and read)
     (param $data $rbytes)
     ;; Result
     (result $res (expected (error $errno)))
   )
 
+  ;; EXPERIMENTAL / INCOMPLETE
   (@interface func (export "exec")
     ;; SPI device for exec
     (param $handle s32)

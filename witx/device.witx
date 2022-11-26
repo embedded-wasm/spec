@@ -1,3 +1,4 @@
+;;; Experimental, device / configuration API
 (use "common.witx")
 
 (typename $handle_array 

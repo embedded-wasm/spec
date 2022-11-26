@@ -1,7 +1,7 @@
 /// Embedded WASM abstract C I2C platform interface
 
-#ifndef EWASM_I2C_H
-#define EWASM_I2C_H
+#ifndef WASME_I2C_DRIVER_H
+#define WASME_I2C_DRIVER_H
 
 #include <stdint.h>
 

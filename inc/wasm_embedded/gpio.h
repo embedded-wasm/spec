@@ -1,7 +1,7 @@
 /// Embedded WASM abstract C GPIO platform interface
 
-#ifndef EWASM_GPIO_H
-#define EWASM_GPIO_H
+#ifndef WASME_GPIO_DRIVER_H
+#define WASME_GPIO_DRIVER_H
 
 #include <stdint.h>
 

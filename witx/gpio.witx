@@ -1,3 +1,4 @@
+;;; GPIO Pin API
 (use "common.witx")
 
 (typename $mode

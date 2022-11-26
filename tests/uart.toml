@@ -1,0 +1,6 @@
+# Mock expectations for uart test, see hal/tests/uart.rs
+ops = [
+  { kind = "uart_init", port = 0, baud = 4000000, tx = -1, rx = -1, res = 1 },
+  { kind = "uart_write", handle = 1, flags = 0x00, data_out = [0xaa, 0xbb, 0xcc], res = 0 },
+  { kind = "uart_read", handle = 1, flags = 0x00, data_in = [0x11, 0x22, 0x33, 0x44], res = 0 },
+]

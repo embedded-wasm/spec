@@ -6,7 +6,7 @@ authors = [
   "Ryan Kurte <ryan@kurte.nz>"
 ]
 license = "MPL-2.0"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 
 # Links argument required to pass variables to dependencies
@@ -23,7 +23,7 @@ default = [ "std", "bind_c", "bind_rs" ]
 
 [dependencies]
 cty = "0.2.2"
-embedded-hal = "1.0.0-alpha.5"
+embedded-hal = "1.0.0-alpha.8"
 log = { version = "0.4.14", default_features = false }
 
 [dependencies.wiggle]

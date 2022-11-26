@@ -27,10 +27,12 @@ fn main() {
             .ctypes_prefix("::cty")
             .header("inc/wasm_embedded/i2c.h")
             .header("inc/wasm_embedded/spi.h")
+            .header("inc/wasm_embedded/uart.h")
             .header("inc/wasm_embedded/gpio.h")
             .allowlist_type("wasme.*")
             .allowlist_type("i2c.*")
             .allowlist_type("spi.*")
+            .allowlist_type("uart.*")
             .allowlist_type("gpio.*");
 
         // Patches to help bindgen with cross compiling

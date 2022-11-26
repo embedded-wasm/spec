@@ -21,6 +21,7 @@ wiggle::from_witx!({
         "./witx/common.witx",
         "./witx/spi.witx",
         "./witx/i2c.witx",
+        "./witx/uart.witx",
         "./witx/gpio.witx",
         "./witx/device.witx",
     ],

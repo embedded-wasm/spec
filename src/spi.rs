@@ -2,7 +2,6 @@
 //!
 //! Provides a platform I2C trait with wiggle and c wrappers
 
-use embedded_hal::spi::blocking::Operation;
 
 use super::Error;
 /// SPI context abstraction.
@@ -22,9 +21,11 @@ pub trait Spi {
 
     fn deinit(&mut self, handle: i32) -> Result<(), Error>;
 
+    fn read<'a>(&mut self, handle: i32, data: &mut [u8]) -> Result<(), Error>;
+
     fn write<'a>(&mut self, handle: i32, data: &[u8]) -> Result<(), Error>;
 
-    fn transfer<'a>(&mut self, handle: i32, data: &mut [u8]) -> Result<(), Error>;
+    fn transfer<'a>(&mut self, handle: i32, read: &mut [u8], write: &[u8]) -> Result<(), Error>;
 
-    fn exec<'a>(&mut self, handle: i32, ops: &[Operation<u8>]) -> Result<(), Error>;
+    fn transfer_inplace<'a>(&mut self, handle: i32, data: &mut [u8]) -> Result<(), Error>;
 }
