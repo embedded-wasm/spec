@@ -26,6 +26,12 @@ pub enum Error {
     Unsupported,
 }
 
+/// Core syscall handler trait
+pub trait Core {
+    /// Execute the provided syscall
+    fn exec(&mut self, cla: u32, ins: u32, flags: u32, cmd: &[u8], resp: &[u8]) -> Result<i32, Error>;
+}
+
 #[cfg(feature="wiggle")]
 impl From<Error> for crate::api::types::Errno {
     fn from(e: Error) -> crate::api::types::Errno {

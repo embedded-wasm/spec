@@ -1,6 +1,9 @@
+;;; Core / shared embedded-wasm APIs and types
 
+;;; Sized type
 (typename $size u32)
 
+;;; Device / Operation handle type
 (typename $dev s32)
 
 ;;; Common error number type
@@ -32,5 +35,31 @@
     (field $ptr (@witx const_pointer u8))
     ;;; The length of the buffer to be written.
     (field $len $size)
+  )
+)
+
+;;; Core syscall-ish API
+(module $core
+  ;; Execute a syscall with specified class and instruction
+  ;; providing a specific command and response object
+  (@interface func (export "exec")
+    ;; Syscall Class Enum
+    (param $cla u32)
+    ;; Syscall flags
+    (param $flags u32)
+    ;; Syscall Instruction Enum
+    (param $ins u32)
+    ;; Device handle (optional, ties syscall to open device)
+    (param $handle s32)
+    ;; Command object pointer
+    (param $cmd (@witx const_pointer u8))
+    ;; Command object length
+    (param $cmd_len u32)
+    ;; Response buffer
+    (param $resp (@witx pointer u8))
+    ;; Response buffer length
+    (param $resp_len u32)
+    ;; Returns a call handle or error
+    (result $res (expected $dev (error $errno)))
   )
 )

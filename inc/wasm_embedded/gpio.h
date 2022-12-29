@@ -31,4 +31,11 @@ typedef struct {
     gpio_get_f *get;
 } gpio_drv_t;
 
+/// GPIO initialisation command
+typedef struct gpio_init_s {
+    int32_t port;
+    int32_t pin;
+    int32_t mode;
+} gpio_init_t __attribute__((packed));
+
 #endif

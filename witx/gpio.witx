@@ -1,6 +1,23 @@
 ;;; GPIO Pin API
+
+;;; Shared definitions
 (use "common.witx")
 
+;;; GPIO instruction enumeration
+(typename $instructions
+   (enum (@witx tag u32)
+    ;; Init instruction, command is $init, response is $handle
+    $init
+    ;; Deinit instruction, empty command and response
+    $deinit
+    ;; Set instruction, command is $value, no response
+    $set
+    ;; Get operation, empty command, response is $value
+    $get
+   )
+)
+
+;;; GPIO pin modes
 (typename $mode
    (enum (@witx tag u32)
     $input
@@ -8,11 +25,24 @@
    )
 )
 
+;;; GPIO pin values
 (typename $value
    (enum (@witx tag u32)
     $low
     $high
    )
+)
+
+;;; Initialisation command object
+(typename $init
+  (record
+    ;; GPIO Port
+    (field $port s32)
+    ;; GPIO Pin
+    (field $pin s32)
+    ;; GPIO Mode
+    (field $mode $mode)
+  )
 )
 
 ;;; Initialise SPI
